@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import Product, Category
-from .models import Order
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -28,31 +27,16 @@ class ProductSerializer(serializers.ModelSerializer):
             "category_id",
             "stock_quantity",
             "image_url",
-            "created_date",
+            "created_at",
         ]
-        read_only_fields = ["id", "created_date"]
+        read_only_fields = ["id", "created_at"]
 
     def validate_price(self, value):
-        if value <= 0:
-            raise serializers.ValidationError("Price must be greater than zero.")
+        if value < 0:
+            raise serializers.ValidationError("Price cannot be negative.")
         return value
 
     def validate_stock_quantity(self, value):
         if value < 0:
             raise serializers.ValidationError("Stock quantity cannot be negative.")
         return value
-    
-class OrderSerializer(serializers.ModelSerializer):
-    product_name = serializers.ReadOnlyField(source="product.name")
-
-    class Meta:
-        model = Order
-        fields = [
-            "id",
-            "product",
-            "product_name",
-            "quantity",
-            "total_price",
-            "created_at",
-        ]
-        read_only_fields = ["total_price", "created_at"]

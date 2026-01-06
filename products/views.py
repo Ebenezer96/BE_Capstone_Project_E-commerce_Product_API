@@ -8,8 +8,6 @@ from rest_framework.response import Response
 from .models import Product, Category
 from .serializers import ProductSerializer, CategorySerializer
 from .filters import ProductFilter
-from .models import Order
-
 
 # -----------------------------
 # Custom Permission
