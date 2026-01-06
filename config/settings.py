@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'accounts',
     'products',
     'rest_framework',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -120,7 +121,13 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 REST_FRAMEWORK = {
-    "DEFAULT_RENDERER_CLASSES": [
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+    ),
+    "DEFAULT_RENDERER_CLASSES": (
         "rest_framework.renderers.JSONRenderer",
-    ]
+    ),
 }
